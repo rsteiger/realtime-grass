@@ -9,7 +9,7 @@
 
 class KeyAction {
    public:
-   virtual void operator()(double deltaT) { };
+   virtual void operator()(int deltaT) { };
 };
 
 class KeyHandler {
@@ -26,18 +26,21 @@ class CameraWindow : public GlutWindow{
    int                        initPositionX, initPositionY;
    int                        startx, starty;
    bool                       keyStates[256];
-   clock_t                    time;
+   int                        time;
    std::vector<KeyHandler>    keyHandlers;
 
    enum  { moveSensitivity = 100, camSensitivity = 2};
 
    void DisableView();
    void EnableView(int x, int y);
+   void DrawGrass(GrassShader &shader, Grass &grass);
 public:
    Camera       camera;
 
    // These will go to scene class eventually
-   Shader shader;
+   PhongShader *phongShader;
+   GrassShader *grassShader;
+   
    Scene *scene;
 
    CameraWindow(GlutMaster &glutMaster,

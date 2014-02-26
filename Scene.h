@@ -13,12 +13,12 @@ class Instance {
 };
 
 class Mesh {
-   public:  
+   public:
       GLuint buffObj;
       GLuint indxBuffObj;
       GLuint normalBuffObj;
-      int iboLen; 
-   
+      int iboLen;
+
       Mesh() { };
 
       explicit Mesh(const std::string &filename);
@@ -30,30 +30,46 @@ class Model {
       std::vector<Instance> instances;
 };
 
+class Grass {
+   public:
+      GLuint buffObj;
+      GLuint dirBuffObj;
+      unsigned int verts;
+      std::vector<Instance> instances;
+      Grass();
+};
+
 class Light {
    public:
       float x,y,z;
       Light() : x(0),y(0),z(0) { };
       Light(float mx, float my, float mz): x(mx), y(my), z(mz) { };
-      Light transform(const glm::mat4 &trans) { 
+      Light transform(const glm::mat4 &trans) {
          glm::vec4 vec(x,y,z,0);
          glm::vec4 vn = trans * vec;
          return Light(vn.x,vn.y,vn.z);
       }
 };
 
-class Scene {
-   public:
-      std::vector<Model> models;
-      std::vector<Light> lights;
-};
-
 class Camera {
    public:
-      enum { sensitivity = 2, moveSensitivity = 1 };
+      enum { sensitivity = 2, moveSensitivity = 1, viewangle = 60 };
       glm::vec3 trans;
       float rot;
       float pitch;
-      Camera(): rot(0), pitch(0),trans(0.0) {};
+      float aspectRatio;
+      Camera(): rot(0), pitch(0),trans(0.0),aspectRatio(1.0) {};
 };
+
+
+class Scene {
+   void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+   public:
+      std::vector<Model> models;
+      std::vector<Light> lights;
+      Grass grass;
+      void tileFrustum(Camera &cam);
+};
+
+
 #endif

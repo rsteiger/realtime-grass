@@ -16,8 +16,8 @@ varying in float distance[1];
 varying in float direction[1];
 
 varying out vec2 oTexCoord;
-varying out vec4 oNormal;
-varying out vec4 oPosition;
+varying out float oDiffuse;
+varying out float oSpecular;
 varying out float age;
 #ifdef NORMALS
 varying out float normal;
@@ -37,6 +37,7 @@ void main(void) {
    int detail;
    float heightC;
    vec4 cPosition, cNormal;
+   vec4 oPosition, oNormal;
 
    float t_age = sin(direction[0]);
    float heightmod = 0.75 + sin(5.090293 * direction[0] + 10) / 4.0; // Just a random magic number!
@@ -45,24 +46,22 @@ void main(void) {
 
    vec4 gPosition = vPosition[0] + uModelMatrix * vec4(0,0,0,1);
    
-   vec2 wind = vec2(0.2*sin(uTime + gPosition.x), 0.2*sin(uTime*0.256 + gPosition.y));
+   vec2 wind = vec2(0.4*sin(uTime + gPosition.x / 10), 0.4*sin(uTime*0.256 + gPosition.z / 10));
 
    vec3 disp = vec3(cos(direction[0]), 0, sin(direction[0]));
 
    float vary = 1.0 + GVARY * sin(GSPRINGT * uTime + direction[0]);
    wind = wind * vary;
 
-   if ( distance[0] >= 2)
-      detail = 6;
-   else if ( distance[0] >= 1.5)
+   if ( distance[0] >= 3)
       detail = 5;
-   else if ( distance[0] >= 1)
+   if ( distance[0] >= 2)
       detail = 4;
-   else if ( distance[0] >= .5)
+   else if ( distance[0] >= 1.5)
       detail = 3;
-   else if ( distance[0] >= .25)
+   else if ( distance[0] >= 1)
       detail = 2;
-   else
+   else 
       detail = 1;
 
    detail = detail * 2;
@@ -103,6 +102,18 @@ void main(void) {
          #ifdef NORMALS
          normal = 0;
          #endif NORMALS
+
+         // Offload diffuse and specular from frag shader
+         vec3 N, L, E, R;
+
+         N = normalize(oNormal.xyz);
+         L = normalize((uViewMatrix * vec4(0.0,10.0,0.0,1.0)).xyz);
+
+         float lambert = abs(dot(N,L));
+         E = normalize(-oPosition.xyz);
+         R = reflect(-L,N);
+         oDiffuse = lambert;
+         oSpecular = .3 * clamp(pow(max(dot(R,E), 0.0), 1.3),0.0,1.0);
 
          // Project
          gl_Position = uProjMatrix * oPosition;

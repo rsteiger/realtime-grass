@@ -8,11 +8,11 @@
  */
 
 #ifdef __APPLE__
-#include <GLUT/glut.h>
 #include <OPENGL/gl.h>
-#endif
-#ifdef __unix__
-#include <GL/glut.h>
+#else
+#include <GL/glew.h>
+#include <GL/glext.h>
+#include <GL/gl.h>
 #endif
 
 #include <stdlib.h>
@@ -36,7 +36,7 @@ GLint getUniLoc(GLuint program, const GLchar *name);
 void getGLversion();
 
 int textFileWrite(char *fn, char *s);
-char *textFileRead(char *fn);
+char *textFileRead(const char *fn);
 
 inline GLint safe_glGetAttribLocation(const GLuint program, const char varname[]) {
   GLint r = glGetAttribLocation(program, varname);

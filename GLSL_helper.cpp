@@ -133,7 +133,7 @@ void getGLversion() {
 // or explicit are given
 //////////////////////////////////////////////////////////////////////
 
-char *textFileRead(char *fn) {
+char *textFileRead(const char *fn) {
 	
 	
 	FILE *fp;

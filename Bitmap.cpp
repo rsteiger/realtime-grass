@@ -1,5 +1,6 @@
 #include "Bitmap.h"
-#include <iostream>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 
@@ -12,9 +13,9 @@ static unsigned int getint(FILE *fp) {
   int c, c1, c2, c3;
 
   /*  get 4 bytes */
-  c = getc(fp); 
-  c1 = getc(fp); 
-  c2 = getc(fp); 
+  c = getc(fp);
+  c1 = getc(fp);
+  c2 = getc(fp);
   c3 = getc(fp);
 
   return ((unsigned int) c) +
@@ -27,7 +28,7 @@ static unsigned int getshort(FILE *fp){
   int c, c1;
 
   /* get 2 bytes*/
-  c = getc(fp); 
+  c = getc(fp);
   c1 = getc(fp);
 
   return ((unsigned int) c) + (((unsigned int) c1) << 8);
