@@ -1,3 +1,8 @@
+/*
+ * As a note, I'm not really sure where this came from, but I did not write
+ * this. This was given to me by my professor.
+ */
+
 #include "Bitmap.h"
 #include <cstdio>
 #include <cstdlib>

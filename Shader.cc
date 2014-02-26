@@ -90,8 +90,8 @@ GrassShader::GrassShader() {
 
    /* get handles to attribute data */
    applyAttributes();
-   
-   try { 
+
+   try {
       grassTex = Bitmap("shaders/grass.bmp");
       grassAlpha = Bitmap("shaders/grass.alpha.bmp");
       grassNoise = Bitmap("shaders/grass.noise.bmp");
@@ -102,7 +102,7 @@ GrassShader::GrassShader() {
    glGenTextures(1, &grassTexLoc);
    glActiveTexture(GL_TEXTURE0);
    glBindTexture(GL_TEXTURE_2D, grassTexLoc);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, grassTex.sizeX, grassTex.sizeY, 
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, grassTex.sizeX, grassTex.sizeY,
                 0, GL_RGB, GL_UNSIGNED_BYTE, grassTex.data);
 
    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -111,7 +111,7 @@ GrassShader::GrassShader() {
    glGenTextures(1, &grassAlphaLoc);
    glActiveTexture(GL_TEXTURE1);
    glBindTexture(GL_TEXTURE_2D, grassAlphaLoc);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, grassAlpha.sizeX, grassAlpha.sizeY, 
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, grassAlpha.sizeX, grassAlpha.sizeY,
                 0, GL_RGB, GL_UNSIGNED_BYTE, grassAlpha.data);
 
    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -120,7 +120,7 @@ GrassShader::GrassShader() {
    glGenTextures(1, &grassNoiseLoc);
    glActiveTexture(GL_TEXTURE2);
    glBindTexture(GL_TEXTURE_2D, grassNoiseLoc);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, grassNoise.sizeX, grassNoise.sizeY, 
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, grassNoise.sizeX, grassNoise.sizeY,
                 0, GL_RGB, GL_UNSIGNED_BYTE, grassNoise.data);
 
    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -138,7 +138,6 @@ PhongShader::PhongShader() {
 
    attachShader(vs,"shaders/phong.vert");
    attachShader(fs,"shaders/phong.frag");
-   
    linkProgram();
 
    position = safe_glGetAttribLocation(program, "aPosition");

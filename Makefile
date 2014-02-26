@@ -3,7 +3,7 @@ CPP = g++
 CPPFLAGS = -w -O3 -g
 
 # Linux (default)
-LDFLAGS = -lGL -lGLU -lglut -DGL_GLEXT_PROTOTYPES
+LDFLAGS = -lglut -lGLU -lGL -lGLEW
 
 # OS X
 ifeq "$(shell uname)" "Darwin"
@@ -13,7 +13,7 @@ endif
 CPPLIBS = $(LDFLAGS) -lncurses
 
 $(EXE): main.o Scene.o Shader.o GLSL_helper.o glutMaster.o glutWindow.o cameraWindow.o Bitmap.o
-	$(CPP) $(CPPFLAGS) $(CPPLIBS) $^ -o $@ -lglut -lGLU -lGL -lGLEW -lncurses
+	$(CPP) $(CPPFLAGS) $^ -o $@ $(CPPLIBS)
 
 main.o: main.cpp cameraWindow.h GLSL_helper.h Shader.h Scene.h glutMaster/glutMaster.h Bitmap.h
 	$(CPP) $(CPPFLAGS) -c main.cpp
